@@ -1,13 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<schema attributeFormDefault="unqualified"
-	elementFormDefault="qualified"
-	targetNamespace="http://xmlns.oracle.com/EjbSdoServiceSOA/SoaSDOEjbService/BPELSdoService"
-	xmlns="http://www.w3.org/2001/XMLSchema">
-	<element name="process">
-		<complexType>
-			<sequence>
-				<element name="input" type="string"/>
-			</sequence>
-		</complexType>
-	</element>
+<?xml version="1.0" encoding="UTF-8"?>
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+        targetNamespace="http://xmlns.oracle.com/EjbSdoServiceSOA/SoaSDOEjbService/BPELSdoService"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:ns0="/nl.amis.sdo.jpa.entities/">
+ <import namespace="/nl.amis.sdo.jpa.entities/"
+         schemaLocation="http://pc100016989:7001/EjbSdoService-ModelSDO-context-root/HrSessionEJBBeanWS?XSD=../entities/EmployeesSDO.xsd"/>
+ <element name="process">
+  <complexType>
+   <sequence>
+    <choice minOccurs="0" maxOccurs="1">
+     <element name="employeeId" type="string"/>
+     <element name="employees" type="ns0:EmployeesSDO"/>
+    </choice>
+   </sequence>
+  </complexType>
+ </element>
+ <element name="reply">
+  <complexType>
+   <sequence>
+     <element name="employees" type="ns0:EmployeesSDO"/>
+   </sequence>
+  </complexType>
+ </element>
 </schema>

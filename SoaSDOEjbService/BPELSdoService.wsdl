@@ -24,6 +24,9 @@
 	<wsdl:message name="BPELSdoServiceRequestMessage">
 		<wsdl:part name="payload" element="client:process"/>
 	</wsdl:message>
+  <wsdl:message name="BPELSdoServiceResponseMessage">
+		<wsdl:part name="reply" element="client:reply"/>
+	</wsdl:message>
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PORT TYPE DEFINITION - A port type groups a set of operations into
 	a logical service unit.
@@ -33,6 +36,7 @@
 	<wsdl:portType name="BPELSdoService">
 		<wsdl:operation name="process">
 			<wsdl:input  message="client:BPELSdoServiceRequestMessage" />
+      <wsdl:output message="client:BPELSdoServiceResponseMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 

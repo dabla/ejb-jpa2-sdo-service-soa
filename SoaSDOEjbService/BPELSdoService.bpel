@@ -10,11 +10,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
 <process name="BPELSdoService"
-               targetNamespace="http://xmlns.oracle.com/EjbSdoServiceSOA/SoaSDOEjbService/BPELSdoService"
-               xmlns="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
-               xmlns:client="http://xmlns.oracle.com/EjbSdoServiceSOA/SoaSDOEjbService/BPELSdoService"
-               xmlns:ora="http://schemas.oracle.com/xpath/extension"
-               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         targetNamespace="http://xmlns.oracle.com/EjbSdoServiceSOA/SoaSDOEjbService/BPELSdoService"
+         xmlns="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:client="http://xmlns.oracle.com/EjbSdoServiceSOA/SoaSDOEjbService/BPELSdoService"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
          xmlns:ns1="/nl.amis.sdo.jpa.services/"
          xmlns:ns2="/nl.amis.sdo.jpa.entities/"
          xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
@@ -28,9 +28,7 @@
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
-
   <!--import namespace="http://xmlns.oracle.com/EjbSdoServiceSOA/SoaSDOEjbService/BPELSdoService" location="BPELSdoService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/-->
-
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       PARTNERLINKS                                                      
@@ -59,8 +57,11 @@
     <!-- Reference to the message passed as input during initiation -->
     <variable name="inputVariable"
               messageType="client:BPELSdoServiceRequestMessage"/>
+    <variable name="outputVariable"
+              messageType="client:BPELSdoServiceResponseMessage"/>
     <variable name="employeesEV" element="ns2:employeesSDO"
-                  bpelx:entity.si="HrEjbSDOService"/>
+              bpelx:entity.si="HrEjbSDOService"/>
+              <variable name="employeesVar" element="ns2:employeesSDO"/>
   </variables>
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,8 +75,38 @@
     <receive name="receiveInput" partnerLink="bpelsdoservice_client"
              portType="client:BPELSdoService" operation="process"
              variable="inputVariable" createInstance="yes"/>
-        <bpelx:bindEntity name="BindEmployeesEntity" variable="employeesEV">
-      <bpelx:key keyname="ns2:employeeId">string(bpws:getVariableData('inputVariable','payload','/client:process/client:input'))</bpelx:key>
-    </bpelx:bindEntity>
+    <switch name="ProcessSwitch">
+      <case condition="bpws:getVariableData('inputVariable','payload','/client:process/client:employeeId') != ''">
+        <sequence>
+          <bpelx:bindEntity name="BindEmployeesEntity" variable="employeesEV">
+            <bpelx:key keyname="ns2:employeeId">string(bpws:getVariableData('inputVariable','payload','/client:process/client:employeeId'))</bpelx:key>
+          </bpelx:bindEntity>
+        </sequence>
+      </case>
+      <otherwise>
+        <sequence>
+          <assign name="AssignOutput">
+            <copy>
+              <from expression="bpws:getVariableData('inputVariable','payload','/client:process/client:employees')"/>
+              <to variable="employeesVar"/>
+            </copy>
+          </assign>
+          <bpelx:createEntity name="CreateEmployeesEntity"
+                              variable="employeesEV">
+            <bpelx:fromExpression>bpws:getVariableData('employeesVar')</bpelx:fromExpression>
+          </bpelx:createEntity>
+        </sequence>
+      </otherwise>
+    </switch>
+    <assign name="AssignOutput">
+      <copy>
+        <from variable="employeesEV" query="/ns2:employeesSDO"/>
+        <to variable="outputVariable" part="reply"
+            query="/client:reply/client:employees"/>
+      </copy>
+    </assign>
+    <reply name="replyOutput" partnerLink="bpelsdoservice_client"
+           portType="client:BPELSdoService" operation="process"
+           variable="outputVariable"/>
   </sequence>
 </process>
