@@ -1,21 +1,22 @@
-Sep 4, 2012 12:56:25 PM oracle.mds
+Oct 22, 2012 11:35:26 AM oracle.mds
 NOTIFICATION: PManager instance is created without multitenancy support as JVM flag "oracle.multitenant.enabled" is not set to enable multitenancy support.
-Sep 4, 2012 12:56:26 PM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
+Oct 22, 2012 11:35:29 AM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
 INFO: XMLSchema incremental build enabled.
-Sep 4, 2012 12:56:26 PM com.collaxa.cube.CubeLogger info
+Oct 22, 2012 11:35:29 AM com.collaxa.cube.CubeLogger info
 INFO: validating "BPELSdoService.bpel" ...
-Sep 4, 2012 12:56:27 PM oracle.integration.platform.blocks.FabricConfigManager <clinit>
+Oct 22, 2012 11:35:29 AM oracle.integration.platform.blocks.FabricConfigManager <clinit>
 WARNING: JRF is unable to determine the current application server platform.
-Sep 4, 2012 12:56:27 PM oracle.integration.platform.blocks.WLSPlatformConfigurationProvider <clinit>
+Oct 22, 2012 11:35:29 AM oracle.integration.platform.blocks.WLSPlatformConfigurationProvider <clinit>
 WARNING: JRF is unable to determine the current application server platform.
 node class name com.collaxa.cube.engine.ext.bpel.v1.blocks.BPELSequenceBlock
-Sep 4, 2012 12:56:27 PM com.collaxa.cube.CubeLogger info
-INFO: Composed "BPELSdoService" in 44.8 milliseconds [nodes 5=0+5, 111.7 nodes/sec]
-Sep 4, 2012 12:56:28 PM com.collaxa.cube.CubeLogger info
-INFO: Compiled "BPELSdoService" in 1.368 seconds
-Sep 4, 2012 12:56:28 PM com.collaxa.cube.CubeLogger info
-INFO: Gathered 3 files in 2.5 milliseconds
+node class name com.collaxa.cube.engine.ext.bpel.v1.blocks.BPELSwitchBlock
+Oct 22, 2012 11:35:29 AM com.collaxa.cube.CubeLogger info
+INFO: Composed "BPELSdoService" in 66.5 milliseconds [nodes 13=0+13, 195.6 nodes/sec]
+Oct 22, 2012 11:35:31 AM com.collaxa.cube.CubeLogger info
+INFO: Compiled "BPELSdoService" in 1.741 seconds
+Oct 22, 2012 11:35:31 AM com.collaxa.cube.CubeLogger info
+INFO: Gathered 3 files in 2.2 milliseconds
 
-Sep 4, 2012 12:56:28 PM com.collaxa.cube.CubeLogger info
-INFO: Packaged "BPELSdoService" in 16.8 milliseconds
+Oct 22, 2012 11:35:31 AM com.collaxa.cube.CubeLogger info
+INFO: Packaged "BPELSdoService" in 12.5 milliseconds
 
